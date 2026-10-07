@@ -86,8 +86,8 @@ static void update(float dt, joypad_inputs_t in, joypad_buttons_t pressed, joypa
 
     // stick -> camera-relative world tilt
     float sx = in.stick_x / 70.0f, sy = in.stick_y / 70.0f;
-    if (sx > 1) sx = 1; if (sx < -1) sx = -1;
-    if (sy > 1) sy = 1; if (sy < -1) sy = -1;
+    sx = fmaxf(-1.0f, fminf(1.0f, sx));
+    sy = fmaxf(-1.0f, fminf(1.0f, sy));
     if (fabsf(sx) < 0.08f) sx = 0;
     if (fabsf(sy) < 0.08f) sy = 0;
     float cy = cosf(cam_yaw), sn = sinf(cam_yaw);
