@@ -1,1 +1,22 @@
 
+name: build-z64
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install libdragon CLI
+        run: npm install -g libdragon
+      - name: Init libdragon
+        run: libdragon init
+      - name: Build ROM
+        run: libdragon make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tiltball-z64
+          path: "*.z64"
