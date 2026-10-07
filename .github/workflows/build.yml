@@ -1,4 +1,3 @@
-
 name: build-z64
 
 on:
@@ -10,12 +9,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Install libdragon CLI
         run: npm install -g libdragon
+
       - name: Init libdragon
         run: libdragon init
+
+      - name: Switch libdragon to preview branch (has OpenGL)
+        run: |
+          cd libdragon
+          git fetch origin preview
+          git checkout FETCH_HEAD
+
+      - name: Install libdragon
+        run: libdragon install
+
       - name: Build ROM
         run: libdragon make
+
       - uses: actions/upload-artifact@v4
         with:
           name: tiltball-z64
